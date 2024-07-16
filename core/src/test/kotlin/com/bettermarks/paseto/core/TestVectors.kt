@@ -37,9 +37,7 @@ data class TestVector(
       (publicKeyPem ?: publicKeyV1)?.let { PublicKey(version, readPublicPem(it)) }
 
   fun privateKey(version: Version) =
-      (privateKeyPem ?: privateKeyV1)?.let {
-        PrivateKey(version, readPrivatePem(it))
-      }
+      (privateKeyPem ?: privateKeyV1)?.let { PrivateKey(version, readPrivatePem(it)) }
 
   companion object {
     fun readPrivatePem(pem: String): ByteArray =
@@ -71,8 +69,7 @@ data class TestVectors(val name: String, val tests: List<TestVector>) {
             .classLoader
             .getResourceAsStream("test-vectors/${version.version}.json")
             .use { input ->
-              json.decodeFromStream<TestVectors>(input!!).tests.filter {
-                  vector ->
+              json.decodeFromStream<TestVectors>(input!!).tests.filter { vector ->
                 (purpose == Purpose.Local && vector.keyHex != null) ||
                     (purpose == Purpose.Public && vector.keyHex == null)
               }
