@@ -1,0 +1,21 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: oracle
+          java-version: 17
+          cache: gradle
+      - name: Check format
+        run: ./gradlew --no-daemon ktfmtCheck
+      - name: Unit tests
+        run: ./gradlew --no-daemon test
