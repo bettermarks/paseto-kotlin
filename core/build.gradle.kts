@@ -10,8 +10,31 @@ plugins {
     kotlin("plugin.serialization")
     id("com.ncorti.ktfmt.gradle")
 
-    // Apply the java-library plugin for API and implementation separation.
     `java-library`
+    `maven-publish`
+}
+
+group = "com.github.bettermarks"
+version = "0.1.0"
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = "paseto-kotlin-core"
+            from(components["java"])
+            pom {
+                licenses {
+                    license {
+                        name = "MIT License"
+                        url = "https://opensource.org/licenses/MIT"
+                    }
+                }
+                scm {
+                    url = "https://github.com/BetterMarks/paseto-kotlin"
+                }
+            }
+        }
+    }
 }
 
 repositories {
@@ -33,6 +56,8 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+    withJavadocJar()
+    withSourcesJar()
 }
 
 tasks.named<Test>("test") {
