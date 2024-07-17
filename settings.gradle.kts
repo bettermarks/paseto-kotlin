@@ -12,4 +12,6 @@ plugins {
 }
 
 rootProject.name = "paseto-kotlin"
-include("core")
+include("paseto-kotlin-core", "paseto-kotlin-kotlinx")
+project(":paseto-kotlin-core").projectDir = file("core")
+project(":paseto-kotlin-kotlinx").projectDir = file("kotlinx")
